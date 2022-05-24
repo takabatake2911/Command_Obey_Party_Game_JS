@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <form id="form">
+            <div>
+                <label for="number_input">人数 </label>
+                <input
+                    type="number"
+                    name="number_input"
+                    id="number_input"
+                    min="2"
+                    value="2"
+                />
+            </div>
+            <div>
+                <input type="submit" id="submit_btn" value="表示" />
+            </div>
+            <h1 id="result_message"></h1>
+        </form>
+        <script>
+            const $result_message = document.getElementById("result_message");
+            // 0~n-1
+            const getRandomIndex = (n) => {
+                return ~~(Math.random() * n);
+            };
+            // 1~n
+            const getRandomNumber = (n) => {
+                return ~~(Math.random() * n) + 1;
+            };
+            // 1~nから２つ
+            const getTwoRandomNumbers = (n) => {
+                const num1 = getRandomNumber(n);
+                let num2;
+                while (true) {
+                    num2 = getRandomNumber(n);
+                    if (num1 !== num2) break;
+                }
+                return [num1, num2];
+            };
+            const create_message = (num1, num2) => {
+                const _list = [
+                    `${num1}番 が 5分間語尾ににゃんを付けて喋る`,
+                    `${num1}番 が 全力でモノマネをする`,
+                    `${num1}番 が アイドルっぽく自己紹介`,
+                    `${num1}番 が 渾身の一発ギャグを披露する`,
+                    `${num1}番 を 皆でくすぐる`,
+                    `${num1}番 が ${num2}番 と 手をつないで散歩してくる`,
+                    `${num1}番 が ${num2}番 を 一分間見つめ合う`,
+                    `${num1}番 が 投げキッスをする`,
+                    `${num1}番 が ${num2}番 に ハグをする`,
+                    `${num1}番 が ${num2}番 に 膝枕をする`,
+                    `${num1}番 が ${num2}番 の 耳に息をふきかける`,
+                    `${num1}番 が 喘ぎ声を出す`,
+                ];
+                return _list[getRandomIndex(_list.length)];
+            };
+            const showResult = (n) => {
+                const [num1, num2] = getTwoRandomNumbers(n);
+                $result_message.innerText = create_message(num1, num2);
+            };
+            const $form = document.getElementById("form");
+            const $number_input = document.getElementById("number_input");
+            $form.addEventListener("submit", (e) => {
+                e.preventDefault();
+                showResult(+$number_input.value);
+            });
+        </script>
+    </body>
+</html>
